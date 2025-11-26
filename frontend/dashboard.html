@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor de Qualidade do Ar - IoT</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        if (window.location.hostname === '127.0.0.1' && window.location.port === '5500') {
+            window.__API_URL__ = "http://192.168.1.103:5001/api";
+        }
+    </script>
+    <script src="js/config.js"></script>
+    <script src="/dashboard/config.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .valor {
+            font-size: 42px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .unidade {
+            font-size: 20px;
+            color: #999;
+            margin-left: 5px;
+        }
+
+        .status {
+            margin-top: 10px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .status.excelente {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.boa {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.moderada {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status.ruim {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .led-indicator {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .led-on {
+            background: #ff4444;
+            box-shadow: 0 0 20px #ff4444;
+            animation: pulse 1s infinite;
+        }
+
+        .led-off {
+            background: #666;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .controls h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .control-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .ultima-atualizacao {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🌬️ Monitor de Qualidade do Ar</h1>
+        <p class="subtitle">ESP32 WROVER + MQ135 + DHT11 + LEDs + Buzzer</p>
+
+        <!-- Cards de Leituras -->
+        <div class="cards">
+            <div class="card">
+                <h3>🌡️ TEMPERATURA</h3>
+                <div>
+                    <span class="valor" id="temp">--</span>
+                    <span class="unidade">°C</span>
+                </div>
+                <span class="status excelente" id="temp-status">Normal</span>
+            </div>
+
+            <div class="card">
+                <h3>💧 UMIDADE</h3>
+                <div>
+                    <span class="valor" id="umid">--</span>
+                    <span class="unidade">%</span>
+                </div>
+                <span class="status excelente" id="umid-status">Normal</span>
+            </div>
+
+            <div class="card">
+                <h3>🌬️ QUALIDADE DO AR</h3>
+                <div>
+                    <span class="valor" id="ar">--</span>
+                    <span class="unidade">PPM</span>
+                </div>
+                <span class="status excelente" id="ar-status">EXCELENTE</span>
+            </div>
+
+            <div class="card">
+                <h3>☁️ NÍVEL DE CO</h3>
+                <div>
+                    <span class="valor" id="co">--</span>
+                    <span class="unidade">PPM</span>
+                </div>
+                <span class="status excelente" id="co-status">Normal</span>
+            </div>
+
+            <div class="card">
+                <h3>🔴 SISTEMA DE ALERTA</h3>
+                <div>
+                    <span class="valor" id="led-texto">Desligado</span>
+                    <span class="led-indicator led-off" id="led-indicator"></span>
+                </div>
+                <small style="color: #999; display: block; margin-top: 10px;">LEDs e Buzzer</small>
+            </div>
+        </div>
+
+        <!-- Gráfico -->
+        <div class="chart-container">
+            <h3 style="color: #667eea; margin-bottom: 15px;">📈 Histórico de Leituras</h3>
+            <canvas id="grafico"></canvas>
+        </div>
+
+        <!-- Controles -->
+        <div class="controls">
+            <h3>⚙️ Ajustar Limites de Alerta (Thresholds)</h3>
+            <div class="control-group">
+                <div>
+                    <label>Temperatura Máxima (°C):</label>
+                    <input type="number" id="temp-max" step="0.1" value="28.0">
+                </div>
+                <div>
+                    <label>Umidade Mínima (%):</label>
+                    <input type="number" id="umid-min" step="0.1" value="40.0">
+                </div>
+                <div>
+                    <label>Ar Bom (< valor):</label>
+                            <input type="number" id="ar-bom" value="500">
+                </div>
+                <div>
+                    <label>Ar Moderado (< valor):</label>
+                            <input type="number" id="ar-moderado" value="1500">
+                </div>
+            </div>
+            <button class="btn" onclick="atualizarThresholds()">💾 Salvar Limites</button>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 Como funciona:</strong><br>
+            • LED Verde = Ar Excelente/Bom<br>
+            • LED Amarelo = Ar Moderado (beep ocasional)<br>
+            • LED Vermelho = Ar Ruim (beep contínuo)<br>
+            • Os limites podem ser ajustados acima e serão sincronizados com o ESP32
+        </div>
+
+        <div class="ultima-atualizacao">
+            Última atualização: <span id="ultima-atualizacao">--</span>
+        </div>
+    </div>
+
+    <script>
+        // Dados para o gráfico
+        let dadosGrafico = {
+            labels: [],
+            temp: [],
+            umid: [],
+            ar: [],
+            co: []
+        };
+
+        // Cria o gráfico
+        const ctx = document.getElementById('grafico').getContext('2d');
+        const grafico = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dadosGrafico.labels,
+                datasets: [
+                    {
+                        label: 'Temperatura (°C)',
+                        data: dadosGrafico.temp,
+                        borderColor: '#ff6384',
+                        backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Umidade (%)',
+                        data: dadosGrafico.umid,
+                        borderColor: '#36a2eb',
+                        backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Qualidade do Ar / 10',
+                        data: dadosGrafico.ar,
+                        borderColor: '#4bc0c0',
+                        backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Nível CO / 10',
+                        data: dadosGrafico.co,
+                        borderColor: '#ff9f40',
+                        backgroundColor: 'rgba(255, 159, 64, 0.1)',
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Busca dados da API
+        async function buscarDados() {
+            try {
+                const respLeituras = await fetch(`${API_URL}/leituras?limite=1`);
+                const dataLeituras = await respLeituras.json();
+
+                if (dataLeituras.leituras && dataLeituras.leituras.length > 0) {
+                    const ultima = dataLeituras.leituras[0];
+                    atualizarCards(ultima);
+                    atualizarGrafico(ultima);
+                }
+
+                const respThresholds = await fetch(`${API_URL}/thresholds`);
+                const thresholds = await respThresholds.json();
+                atualizarInputsThresholds(thresholds);
+
+                document.getElementById('ultima-atualizacao').textContent =
+                    new Date().toLocaleTimeString('pt-BR');
+
+                console.log('✅ Dados atualizados com sucesso');
+            } catch (erro) {
+                console.error('❌ Erro ao buscar dados:', erro);
+            }
+        }
+
+        function atualizarCards(leitura) {
+            document.getElementById('temp').textContent = leitura.temperatura?.toFixed(1) || '--';
+            document.getElementById('umid').textContent = leitura.umidade?.toFixed(1) || '--';
+            document.getElementById('ar').textContent = leitura.qualidadeAr || '--';
+            document.getElementById('co').textContent = leitura.nivelCO || '--';
+
+            const tempMax = parseFloat(document.getElementById('temp-max').value);
+            const umidMin = parseFloat(document.getElementById('umid-min').value);
+
+            atualizarStatus('temp', leitura.temperatura > tempMax);
+            atualizarStatus('umid', leitura.umidade < umidMin);
+
+            const statusQualidade = leitura.statusQualidade || 'BOA';
+            const arStatus = document.getElementById('ar-status');
+            arStatus.textContent = statusQualidade;
+            arStatus.className = `status ${statusQualidade.toLowerCase()}`;
+
+            const ledLigado = leitura.led_ativo;
+            document.getElementById('led-texto').textContent = ledLigado ? 'Ligado' : 'Desligado';
+            const ledIndicator = document.getElementById('led-indicator');
+            ledIndicator.className = `led-indicator ${ledLigado ? 'led-on' : 'led-off'}`;
+
+            const coStatus = leitura.nivelCO < 100 ? 'Normal' : 'Alto';
+            document.getElementById('co-status').textContent = coStatus;
+        }
+
+        function atualizarStatus(tipo, alerta) {
+            const elemento = document.getElementById(`${tipo}-status`);
+            if (alerta) {
+                elemento.className = 'status ruim';
+                elemento.textContent = 'Alerta';
+            } else {
+                elemento.className = 'status excelente';
+                elemento.textContent = 'Normal';
+            }
+        }
+
+        function atualizarGrafico(leitura) {
+            const agora = new Date().toLocaleTimeString('pt-BR');
+
+            dadosGrafico.labels.push(agora);
+            dadosGrafico.temp.push(leitura.temperatura || 0);
+            dadosGrafico.umid.push(leitura.umidade || 0);
+            dadosGrafico.ar.push((leitura.qualidadeAr || 0) / 10);
+            dadosGrafico.co.push((leitura.nivelCO || 0) / 10);
+
+            if (dadosGrafico.labels.length > 20) {
+                dadosGrafico.labels.shift();
+                dadosGrafico.temp.shift();
+                dadosGrafico.umid.shift();
+                dadosGrafico.ar.shift();
+                dadosGrafico.co.shift();
+            }
+
+            grafico.update();
+        }
+
+        function atualizarInputsThresholds(thresholds) {
+            document.getElementById('temp-max').value = thresholds.temp_max;
+            document.getElementById('umid-min').value = thresholds.umid_min;
+            document.getElementById('ar-bom').value = thresholds.ar_bom || 500;
+            document.getElementById('ar-moderado').value = thresholds.ar_moderado || 1500;
+        }
+
+        async function atualizarThresholds() {
+            const thresholds = {
+                temp_max: parseFloat(document.getElementById('temp-max').value),
+                umid_min: parseFloat(document.getElementById('umid-min').value),
+                ar_bom: parseInt(document.getElementById('ar-bom').value),
+                ar_moderado: parseInt(document.getElementById('ar-moderado').value)
+            };
+
+            try {
+                const resposta = await fetch(`${API_URL}/thresholds`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(thresholds)
+                });
+
+                if (resposta.ok) {
+                    alert('✅ Limites atualizados! O ESP32 receberá as novas configurações em até 1 minuto.');
+                } else {
+                    alert('❌ Erro ao atualizar limites');
+                }
+            } catch (erro) {
+                console.error('Erro:', erro);
+                alert('❌ Erro de conexão com a API');
+            }
+        }
+
+        setInterval(buscarDados, 3000);
+        buscarDados();
+    </script>
+</body>
+
+</html>

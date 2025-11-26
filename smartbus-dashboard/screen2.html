@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smartbus - Condições Climáticas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <base href="/smartbus/" />
+  <script src="/smartbus/js/config.js"></script>
+  <script src="/smartbus/js/script.js"></script>
+  
+  <style>
+    .progress-bar {
+      @apply h-3 rounded-full bg-gray-200 relative overflow-hidden;
+    }
+    .progress-fill {
+      @apply absolute inset-y-0 left-0 transition-all duration-1000;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- HEADER FIXO -->
+  <header class="bg-[#1A1F38] text-white shadow-2xl fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <div class="bg-cyan-500 p-2 rounded-lg">
+          <i class="fas fa-bus text-white text-2xl"></i>
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold text-cyan-400">Smartbus</h1>
+          <p class="text-xs opacity-90 -mt-1">O tempo todo com você</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-6 text-sm">
+        <span class="opacity-80">Recife, PE • 08:42</span>
+        <span class="bg-cyan-500 px-3 py-1 rounded-full text-xs font-medium">Online</span>
+        <button class="hover:text-cyan-400 transition">
+          <i class="fas fa-user-circle text-2xl"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="flex-1 pt-24 pb-32 px-6 max-w-4xl mx-auto">
+
+    <!-- CARD CONDIÇÃO CLIMÁTICA -->
+    <div class="mb-8">
+      <div class="flex items-center gap-3 mb-5">
+        <i class="fas fa-cloud-sun text-cyan-500 text-2xl"></i>
+        <h2 class="text-2xl font-bold text-gray-800">Condições Climáticas</h2>
+      </div>
+
+      <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+        <div class="bg-gradient-to-r from-cyan-50 to-blue-50 px-8 py-10">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-10">
+            
+            <!-- Esquerda: Temperatura + Umidade com barras -->
+            <div class="space-y-8">
+              <div>
+                <p class="text-gray-600 text-sm font-medium">Temperatura</p>
+                <div class="progress-bar mt-2">
+                  <div class="progress-fill bg-gradient-to-r from-blue-500 to-blue-700 w-9/12"></div>
+                </div>
+                <p class="text-6xl font-bold text-gray-800 mt-4">24°</p>
+              </div>
+
+              <div>
+                <p class="text-gray-600 text-sm font-medium">Umidade Relativa</p>
+                <div class="progress-bar mt-2">
+                  <div class="progress-fill bg-gradient-to-r from-cyan-500 to-cyan-700 w-11/12"></div>
+                </div>
+                <p class="text-5xl font-bold text-gray-800 mt-4">87%</p>
+              </div>
+            </div>
+
+            <!-- Direita: Ícone + Descrição -->
+            <div class="text-center">
+              <i class="fas fa-cloud-rain text-9xl text-gray-400"></i>
+              <p class="text-2xl font-bold text-gray-700 mt-6">Chuva fraca</p>
+              <p class="text-xs text-gray-500 mt-2">
+                Fonte: INPE - Agência Pernambucana de Águas e Clima
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRÓXIMAS CHEGADAS -->
+    <div>
+      <div class="flex items-center gap-3 mb-5">
+        <i class="fas fa-bus text-cyan-500 text-2xl"></i>
+        <h2 class="text-2xl font-bold text-gray-800">Próximas Chegadas</h2>
+      </div>
+
+      <div class="space-y-4">
+        <!-- 712 -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center justify-between hover:shadow-xl transition">
+          <div class="flex items-center gap-5">
+            <div class="bg-blue-700 text-white w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-md">712</div>
+            <div>
+              <p class="font-bold text-xl text-gray-800">Alto Santa Terezinha</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="text-green-600 font-bold text-xl">Chegando agora</p>
+          </div>
+        </div>
+
+        <!-- 345 -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center justify-between hover:shadow-xl transition">
+          <div class="flex items-center gap-5">
+            <div class="bg-blue-700 text-white w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-md">345</div>
+            <div><p class="font-bold text-xl text-gray-800">Totó (Conde da Boa Vista)</p></div>
+          </div>
+          <div class="text-orange-600 font-bold text-xl">1 minuto</div>
+        </div>
+
+        <!-- 711 -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center justify-between hover:shadow-xl transition">
+          <div class="flex items-center gap-5">
+            <div class="bg-blue-700 text-white w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-md">711</div>
+            <div><p class="font-bold text-xl text-gray-800">Alto do Pascoal</p></div>
+          </div>
+          <div class="text-orange-600 font-bold text-xl">3 minutos</div>
+        </div>
+
+        <!-- 245 -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center justify-between hover:shadow-xl transition">
+          <div class="flex items-center gap-5">
+            <div class="bg-blue-700 text-white w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-md">245</div>
+            <div><p class="font-bold text-xl text-gray-800">Dois Unidos (Jardim de Barro)</p></div>
+          </div>
+          <div class="text-orange-600 font-bold text-xl">3 minutos</div>
+        </div>
+
+        <!-- 588 -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center justify-between hover:shadow-xl transition">
+          <div class="flex items-center gap-5">
+            <div class="bg-blue-700 text-white w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-md">588</div>
+            <div><p class="font-bold text-xl text-gray-800">Circular (T.I. Recife)</p></div>
+          </div>
+          <div class="text-orange-600 font-bold text-xl">5 minutos</div>
+        </div>
+
+        <!-- 746 (Programado) -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center justify-between opacity-80">
+          <div class="flex items-center gap-5">
+            <div class="bg-gray-500 text-white w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-md">746</div>
+            <div><p class="font-bold text-xl text-gray-700">Cajueiro</p></div>
+          </div>
+          <div class="text-gray-600 font-medium text-xl">
+            12:50 <span class="block text-sm">(Programado)</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-center text-xs text-gray-500 mt-6">
+        Tem possível alteração a cada 2 minutos. Mantenha-se atualizado.
+      </p>
+    </div>
+
+
+    
+  </main>
+
+  <!-- RODAPÉ FIXO -->
+  <footer class="fixed bottom-0 left-0 right-0 bg-white border-t-4 border-cyan-500 shadow-2xl">
+    <div class="max-w-7xl mx-auto px-8 py-5">
+      <div class="flex justify-around items-center text-cyan-600">
+        <button class="flex flex-col items-center gap-1 font-bold">
+          <i class="fas fa-bus text-3xl"></i>
+          <span class="text-xs">Próximas</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-gray-500">
+          <i class="fas fa-clock text-3xl"></i>
+          <span class="text-xs">Em Tempo Real</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-gray-500">
+          <i class="fas fa-wifi text-3xl"></i>
+          <span class="text-xs">Conectividade</span>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+</body>
+<script>
+    var target = document.getElementById('target');
+var watchId;
+
+function appendLocation(location, verb) {
+  verb = verb || 'updated';
+  var newLocation = document.createElement('p');
+  newLocation.innerHTML = 'Location ' + verb + ': ' + location.coords.latitude + ', ' + location.coords.longitude + '';
+  target.appendChild(newLocation);
+}
+
+if ('geolocation' in navigator) {
+  document.getElementById('askButton').addEventListener('click', function () {
+    navigator.geolocation.getCurrentPosition(function (location) {
+      appendLocation(location, 'fetched');
+    });
+    watchId = navigator.geolocation.watchPosition(appendLocation);
+  });
+} else {
+  target.innerText = 'Geolocation API not supported.';
+}
+</script>
+</html>

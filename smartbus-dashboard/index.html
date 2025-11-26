@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smartbus - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if (window.location.hostname === '127.0.0.1' && window.location.port === '5500') {
+      window.__API_URL__ = "http://192.168.1.103:5001/api";
+    }
+  </script>
+  
+  <base href="/smartbus/" />
+
+  <script src="js/config.js"></script>
+  <script src="/smartbus/js/config.js"></script>
+  <script src="/smartbus/js/script.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+  <!-- Header fixo -->
+  <header class="bg-[#1A1F38] text-white py-4 shadow-lg fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <i class="fas fa-bus text-cyan-400 text-2xl"></i>
+        <h1 class="text-xl font-bold text-cyan-400">Smartbus</h1>
+        <span class="text-xs opacity-80">O tempo todo com você</span>
+      </div>
+      <div class="flex gap-6">
+        <a href="screen2.html" class="hover:text-cyan-400 transition">Clima</a>
+        <a href="screen3.html" class="hover:text-cyan-400 transition">Eficiência</a>
+        <a href="screen4.html" class="hover:text-cyan-400 transition">Alertas</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero com abas rápidas -->
+  <main class="pt-24 pb-12 px-4 max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Smartbus - Dashboard Inteligente</h2>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <a href="screen2.html" class="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition transform hover:-translate-y-2">
+        <i class="fas fa-cloud-rain text-5xl text-blue-600 mb-4"></i>
+        <h3 class="text-xl font-bold">Condições Climáticas</h3>
+        <p class="text-gray-600 mt-2">Temperatura, umidade e previsão</p>
+      </a>
+
+      <a href="screen3.html" class="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition transform hover:-translate-y-2">
+        <i class="fas fa-chart-line text-5xl text-green-600 mb-4"></i>
+        <h3 class="text-xl font-bold">Eficiência da Parada</h3>
+        <p class="text-gray-600 mt-2">Iluminação, sensores e mapa</p>
+      </a>
+
+      <a href="screen4.html" class="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition transform hover:-translate-y-2">
+        <i class="fas fa-bell text-5xl text-red-600 mb-4"></i>
+        <h3 class="text-xl font-bold">Alertas em Tempo Real</h3>
+        <p class="text-gray-600 mt-2">Movimentação suspeita, ruído, temperatura</p>
+      </a>
+    </div>
+  </main>
+</body>
+
+</html>
