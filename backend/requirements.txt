@@ -3,4 +3,8 @@ flask_cors
 pymongo
 python-dotenv
 requests
-datetime
+gunicorn
+pyotp
+qrcode[pil]
+flask-login
+werkzeug
