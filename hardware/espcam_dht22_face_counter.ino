@@ -1,4 +1,3 @@
-
 // ========== BIBLIOTECAS ==========
 #include "WiFi.h"
 #include "esp_camera.h"
@@ -11,8 +10,7 @@
 #include "esp_http_client.h"
 #include "DHT.h"
 
-// ========== CONFIGURAÇÕES DE HARDWARE ==========
-// Pinos da câmera (AI-Thinker ESP32-CAM)
+// ========== CONFIGURAÇÕES DE HARDWARE (ESP32-CAM) ==========
 #define PWDN_GPIO_NUM     32
 #define RESET_GPIO_NUM    -1
 #define XCLK_GPIO_NUM      0
@@ -30,19 +28,21 @@
 #define HREF_GPIO_NUM     23
 #define PCLK_GPIO_NUM     22
 
-// Pino do sensor DHT22
+// Pino do sensor DHT22 (GPIO 4 no ESP32-CAM costuma ser o LED Flash, cuidado. 
+// Se estiver usando adaptador, verifique se é o pino 4 ou 13, 14, etc.)
 #define DHTPIN 4
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
 
 // ========== CONFIGURAÇÕES DE REDE E API ==========
-const char* ssid = "minhaRede";
-const char* password = "12345678";
-const char* api_url = "http://192.168.1.103:5001/api/leituras"; // <<-- Altere para o IP do seu computador
+const char* ssid = "minhaRede";        // <--- SEU WIFI
+const char* password = "12345678";    // <--- SUA SENHA
+
+const char* api_url = "https://pi-4p.onrender.com/api/leituras"; 
 
 // ========== VARIÁVEIS GLOBAIS ==========
 unsigned long tempoAnterior = 0;
-const unsigned long intervaloContagem = 60000; // 1 minuto (editável)
+const unsigned long intervaloContagem = 60000; // 1 minuto
 int contagemRostos = 0;
 
 // ========== FUNÇÕES AUXILIARES ==========
@@ -68,11 +68,10 @@ void configurarCamera() {
   config.pin_reset = RESET_GPIO_NUM;
   config.xclk_freq_hz = 20000000;
   config.pixel_format = PIXFORMAT_JPEG;
-  config.frame_size = FRAMESIZE_VGA;
+  config.frame_size = FRAMESIZE_QVGA; // Baixa resolução para processar rápido
   config.jpeg_quality = 12;
   config.fb_count = 1;
 
-  // Inicializa a câmera
   esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) {
     Serial.printf("Falha ao inicializar a câmera: 0x%x", err);
@@ -87,10 +86,7 @@ void conectarWiFi() {
     delay(500);
     Serial.print(".");
   }
-  Serial.println("
-WiFi conectado!");
-  Serial.print("Endereço IP: ");
-  Serial.println(WiFi.localIP());
+  Serial.println("\nWiFi conectado!");
 }
 
 void enviarDados(float temperatura, float umidade, int rostos) {
@@ -99,31 +95,36 @@ void enviarDados(float temperatura, float umidade, int rostos) {
     doc["temperatura"] = temperatura;
     doc["umidade"] = umidade;
     doc["faces_detectadas"] = rostos;
+    
+    // Adicione campos extras para evitar erro no simulador se houver validação
+    doc["qualidadeAr"] = 0; 
+    doc["nivelCO"] = 0;
 
     String json;
     serializeJson(doc, json);
 
+    // CONFIGURAÇÃO HTTPS (SSL)
     esp_http_client_config_t config = {
       .url = api_url,
       .method = HTTP_METHOD_POST,
-      .timeout_ms = 5000,
-      .is_async = false,
+      .timeout_ms = 10000,
+      .cert_pem = NULL, 
+      .skip_cert_common_name_check = true,  // IMPORTANTE PARA RENDER/HTTPS
     };
+
     esp_http_client_handle_t client = esp_http_client_init(&config);
     esp_http_client_set_header(client, "Content-Type", "application/json");
     esp_http_client_set_post_field(client, json.c_str(), json.length());
 
     esp_err_t err = esp_http_client_perform(client);
     if (err == ESP_OK) {
-      Serial.printf("Status da resposta HTTP: %d
-", esp_http_client_get_status_code(client));
+      Serial.printf("Status HTTP: %d\n", esp_http_client_get_status_code(client));
     } else {
-      Serial.printf("Falha na requisição HTTP: %s
-", esp_err_to_name(err));
+      Serial.printf("Falha HTTP: %s\n", esp_err_to_name(err));
     }
     esp_http_client_cleanup(client);
   } else {
-    Serial.println("WiFi desconectado. Não foi possível enviar os dados.");
+    Serial.println("WiFi desconectado.");
   }
 }
 
@@ -136,48 +137,43 @@ void setup() {
   configurarCamera();
   dht.begin();
   conectarWiFi();
-
-  // Desativa o brownout detector
+  
+  // Desativa Brownout Detector
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
 }
 
 // ========== LOOP ==========
 void loop() {
   unsigned long tempoAtual = millis();
-
-  // Detecta rostos
+  
+  // Simples detecção de movimento/rosto (simulado para este exemplo)
+  // Em projeto real, usaríamos detecção na imagem do frame buffer
   camera_fb_t *fb = esp_camera_fb_get();
   if (fb) {
-    // Lógica de detecção de rosto (simplificada)
-    // Para uma detecção real, você precisaria de uma biblioteca de visão computacional
-    // Aqui, vamos simular a detecção de um rosto a cada 5 segundos
-    if (tempoAtual % 5000 < 100) { // Simula detecção
-        contagemRostos++;
-        Serial.printf("Rosto detectado! Contagem atual: %d
-", contagemRostos);
-    }
     esp_camera_fb_return(fb);
+    // Lógica simples: incrementa aleatoriamente para teste
+    // Remova o if abaixo se tiver lógica real de detecção
+    if (random(0, 100) > 95) { 
+       contagemRostos++;
+       Serial.println("Rosto detectado (simulado)!");
+    }
   }
 
-  // Verifica se o intervalo de 1 minuto foi atingido
   if (tempoAtual - tempoAnterior >= intervaloContagem) {
     tempoAnterior = tempoAtual;
 
-    // Lê os sensores
     float umidade = dht.readHumidity();
     float temperatura = dht.readTemperature();
 
     if (isnan(umidade) || isnan(temperatura)) {
-      Serial.println("Falha ao ler do sensor DHT!");
+      Serial.println("Falha sensor DHT!");
+      // Envia zeros ou tenta ler de novo
+      enviarDados(0, 0, contagemRostos);
     } else {
-      Serial.printf("Temperatura: %.2f °C, Umidade: %.2f %%
-", temperatura, umidade);
-      Serial.printf("Enviando dados para a API... (contagem de rostos: %d)
-", contagemRostos);
+      Serial.printf("Temp: %.1f C, Umid: %.1f %%\n", temperatura, umidade);
       enviarDados(temperatura, umidade, contagemRostos);
     }
-
-    // Zera a contagem de rostos
     contagemRostos = 0;
   }
+  delay(100); // Pequeno delay para não travar CPU
 }
