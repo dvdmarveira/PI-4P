@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smartbus - Eficiência da Parada</title>
+  <title>Smartbus - Eficiência</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  
   <base href="/smartbus/" />
   <script src="/smartbus/js/config.js"></script>
   <script src="/smartbus/js/script.js"></script>
@@ -17,30 +18,32 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
 
-  <!-- HEADER FIXO -->
   <header class="bg-[#1A1F38] text-white shadow-2xl fixed top-0 left-0 right-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-4">
-        <div class="bg-cyan-500 p-2 rounded-lg">
+      <a href="/smartbus/" class="flex items-center gap-4 group">
+        <div class="bg-cyan-500 p-2 rounded-lg group-hover:bg-cyan-400 transition">
           <i class="fas fa-bus text-white text-2xl"></i>
         </div>
         <div>
           <h1 class="text-2xl font-bold text-cyan-400">Smartbus</h1>
           <p class="text-xs opacity-90 -mt-1">O tempo todo com você</p>
         </div>
+      </a>
+      
+      <div class="hidden md:flex items-center gap-6 text-sm">
+        <a href="/smartbus/screen2.html" class="hover:text-cyan-400 transition">Clima</a>
+        <a href="/smartbus/screen3.html" class="text-cyan-400 font-bold">Eficiência</a>
+        <a href="/smartbus/screen4.html" class="hover:text-cyan-400 transition">Alertas</a>
       </div>
+
       <div class="flex items-center gap-6 text-sm">
-        <span class="opacity-80">Recife, PE • 08:42</span>
         <span class="bg-cyan-500 px-3 py-1 rounded-full text-xs font-medium">Online</span>
-        <button class="hover:text-cyan-400"><i class="fas fa-user-circle text-2xl"></i></button>
       </div>
     </div>
   </header>
 
-  <!-- CONTEÚDO -->
-  <main class="flex-1 pt-24 pb-32 px-6 max-w-4xl mx-auto">
+  <main class="flex-1 pt-24 pb-32 px-6 max-w-4xl mx-auto w-full">
 
-    <!-- EFICIÊNCIA DA PARADA -->
     <div class="mb-8">
       <div class="flex items-center gap-3 mb-5">
         <i class="fas fa-bolt text-cyan-500 text-2xl"></i>
@@ -49,9 +52,7 @@
 
       <div class="bg-white rounded-3xl shadow-xl p-8">
         <div class="space-y-8">
-
-          <!-- Iluminação -->
-          <div class="flex items-center justify-between">
+          <div class="flex items-center justify-between flex-wrap gap-4">
             <div class="flex items-center gap-5">
               <i class="fas fa-lightbulb text-4xl text-gray-600"></i>
               <div>
@@ -59,15 +60,14 @@
                 <p class="text-2xl font-bold text-green-600">Ótima</p>
               </div>
             </div>
-            <div class="w-48">
+            <div class="w-full md:w-48">
               <div class="progress-bar">
                 <div class="progress-fill bg-gradient-to-r from-green-400 to-green-600 w-full"></div>
               </div>
             </div>
           </div>
 
-          <!-- Temperatura -->
-          <div class="flex items-center justify-between">
+          <div class="flex items-center justify-between flex-wrap gap-4">
             <div class="flex items-center gap-5">
               <i class="fas fa-thermometer-half text-4xl text-gray-600"></i>
               <div>
@@ -75,111 +75,55 @@
                 <p class="text-2xl font-bold text-blue-600">Boa</p>
               </div>
             </div>
-            <div class="w-48">
+            <div class="w-full md:w-48">
               <div class="progress-bar">
                 <div class="progress-fill bg-gradient-to-r from-blue-400 to-blue-600 w-4/5"></div>
               </div>
             </div>
           </div>
 
-          <!-- Sensores -->
-          <div class="flex items-center justify-between">
+          <div class="flex items-center justify-between flex-wrap gap-4">
             <div class="flex items-center gap-5">
               <i class="fas fa-satellite-dish text-4xl text-gray-600"></i>
               <div>
                 <p class="text-lg font-medium text-gray-700">Sensores</p>
-                <p class="text-2xl font-bold text-green-600">Funcionando</p>
+                <p class="text-2xl font-bold text-green-600">Online</p>
               </div>
             </div>
-            <div class="w-48">
+            <div class="w-full md:w-48">
               <div class="progress-bar">
                 <div class="progress-fill bg-gradient-to-r from-green-400 to-green-600 w-full"></div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
 
-    <!-- MAPA DE PARADAS -->
     <div>
       <div class="flex items-center gap-3 mb-5">
         <i class="fas fa-map-marked-alt text-cyan-500 text-2xl"></i>
-        <h2 class="text-2xl font-bold text-gray-800">Mapa de Paradas</h2>
+        <h2 class="text-2xl font-bold text-gray-800">Mapa</h2>
       </div>
 
       <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
         <div class="bg-gradient-to-b from-purple-50 to-blue-50 p-6">
-          <!-- Grid do mapa -->
-          <div class="relative bg-gray-50 border-2 border-dashed border-gray-300 rounded-2xl h-96 overflow-hidden"
-               style="background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
-                        linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
-                        background-size: 30px 30px;">
-
-            <!-- Pontos amarelos -->
-            <div class="absolute top-20 left-24">
-              <i class="fas fa-circle text-yellow-400 text-3xl drop-shadow"></i>
-              <p class="text-xs text-center mt-1 font-medium">Rua José Osório Coelho</p>
+          <div class="relative bg-gray-50 border-2 border-dashed border-gray-300 rounded-2xl h-80 w-full overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center text-gray-300 opacity-20">
+                <i class="fas fa-map text-9xl"></i>
             </div>
-
-            <div class="absolute bottom-16 left-36">
-              <i class="fas fa-circle text-yellow-400 text-3xl drop-shadow"></i>
-              <p class="text-xs text-center mt-1 font-medium">Dona Severina</p>
+            
+            <div class="absolute top-1/4 left-1/4">
+               <i class="fas fa-map-marker-alt text-green-500 text-3xl drop-shadow"></i>
             </div>
-
-            <!-- Pontos verdes -->
-            <div class="absolute top-32 left-48">
-              <i class="fas fa-check-circle text-green-500 text-4xl drop-shadow-lg"></i>
-              <p class="text-xs text-center mt-1 font-medium text-green-700">Correios</p>
+            <div class="absolute bottom-1/3 right-1/4">
+               <i class="fas fa-exclamation-circle text-red-500 text-3xl drop-shadow"></i>
             </div>
-
-            <div class="absolute bottom-28 left-60">
-              <i class="fas fa-check-circle text-green-500 text-4xl drop-shadow-lg"></i>
-              <p class="text-xs text-center mt-1 font-medium text-green-700">Ponto de Ônibus</p>
-            </div>
-
-            <!-- Alerta vermelho -->
-            <div class="absolute top-24 right-8 bg-red-600 text-white px-4 py-2 rounded-lg shadow-2xl text-sm font-bold text-center">
-              Movimentação suspeita no horário de pico
-            </div>
-            <div class="absolute top-36 right-12">
-              <i class="fas fa-exclamation-triangle text-red-600 text-5xl"></i>
-            </div>
-
           </div>
-
-          <p class="text-xs text-gray-500 text-center mt-4">
-            Tem possível atualização a cada 2 minutos. Mantenha-se atualizado.
-          </p>
         </div>
       </div>
-    </div>
-
-  </main>
-
-  <!-- RODAPÉ FIXO COM 3 BOTÕES -->
-  <footer class="fixed bottom-0 left-0 right-0 bg-white border-t-4 border-cyan-500 shadow-2xl">
-    <div class="max-w-7xl mx-auto px-8 py-5">
-      <div class="flex justify-around items-center">
-        <button class="flex flex-col items-center gap-1 text-gray-500">
-          <i class="fas fa-bus text-3xl"></i>
-          <span class="text-xs">Próximas</span>
-        </button>
-
-        <button class="flex flex-col items-center gap-1 text-cyan-600 font-bold">
-          <i class="fas fa-bolt text-3xl"></i>
-          <span class="text-xs">Eficiência</span>
-        </button>
-
-        <button class="flex flex-col items-center gap-1 text-gray-500">
-          <i class="fas fa-wifi text-3xl"></i>
-          <span class="text-xs">Conectividade</span>
-        </button>
-      </div>
-
-      <!-- Indicadores no rodapé -->
-      <div class="flex justify-center gap-8 mt-3">
+      
+      <div class="flex justify-center gap-6 mt-6 pb-6">
         <div class="flex items-center gap-2">
           <i class="fas fa-check-circle text-green-500"></i>
           <span class="text-xs text-gray-600">Normal</span>
@@ -193,6 +137,26 @@
           <span class="text-xs text-gray-600">Alerta</span>
         </div>
       </div>
+    </div>
+
+  </main>
+
+  <footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-3 shadow-[0_-5px_10px_rgba(0,0,0,0.05)] md:hidden z-50">
+    <div class="flex justify-around items-center text-xs">
+        <a href="/smartbus/screen2.html" class="flex flex-col items-center gap-1 text-gray-400 hover:text-cyan-600">
+            <i class="fas fa-cloud-rain text-xl"></i>
+            <span>Clima</span>
+        </a>
+        
+        <a href="/smartbus/screen3.html" class="flex flex-col items-center gap-1 text-cyan-600 font-bold">
+            <i class="fas fa-chart-line text-xl"></i>
+            <span>Eficiência</span>
+        </a>
+        
+        <a href="/smartbus/screen4.html" class="flex flex-col items-center gap-1 text-gray-400 hover:text-cyan-600">
+            <i class="fas fa-bell text-xl"></i>
+            <span>Alertas</span>
+        </a>
     </div>
   </footer>
 
