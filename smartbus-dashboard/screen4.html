@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smartbus - Alertas em Tempo Real</title>
+  <title>Smartbus - Alertas</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  
   <base href="/smartbus/" />
   <script src="/smartbus/js/config.js"></script>
   <script src="/smartbus/js/script.js"></script>
@@ -14,147 +15,59 @@
 
 <body class="bg-gray-100 min-h-screen flex flex-col">
 
-  <!-- HEADER FIXO -->
   <header class="bg-[#1A1F38] text-white shadow-2xl fixed top-0 left-0 right-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-4">
-        <div class="bg-cyan-500 p-2 rounded-lg">
+      <a href="/smartbus/" class="flex items-center gap-4 group">
+        <div class="bg-cyan-500 p-2 rounded-lg group-hover:bg-cyan-400 transition">
           <i class="fas fa-bus text-white text-2xl"></i>
         </div>
         <div>
           <h1 class="text-2xl font-bold text-cyan-400">Smartbus</h1>
           <p class="text-xs opacity-90 -mt-1">O tempo todo com você</p>
         </div>
+      </a>
+      
+      <div class="hidden md:flex items-center gap-6 text-sm">
+        <a href="/smartbus/screen2.html" class="hover:text-cyan-400 transition">Clima</a>
+        <a href="/smartbus/screen3.html" class="hover:text-cyan-400 transition">Eficiência</a>
+        <a href="/smartbus/screen4.html" class="text-cyan-400 font-bold">Alertas</a>
       </div>
+
       <div class="flex items-center gap-6 text-sm">
-        <span class="opacity-80">Recife, PE • 10:18</span>
         <span class="bg-cyan-500 px-3 py-1 rounded-full text-xs font-medium">Online</span>
-        <button class="hover:text-cyan-400 transition">
-          <i class="fas fa-user-circle text-2xl"></i>
-        </button>
       </div>
     </div>
   </header>
 
-  <!-- BARRA DE STATUS SUPERIOR (roxa como na imagem) -->
-  <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 shadow-lg">
+  <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 shadow-lg pt-24">
     <div class="max-w-7xl mx-auto px-6 flex items-center justify-between text-sm">
       <div class="flex items-center gap-4">
-        <span class="bg-white/20 px-4 py-1 rounded-full text-xs font-medium">Terminal 10 - Centro</span>
-        <span class="font-semibold">Parada: Av. Boa Viagem</span>
+        <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-medium">Terminal 10</span>
+        <span class="font-semibold hidden sm:inline">Av. Boa Viagem</span>
       </div>
       <span class="text-xs opacity-90">Atualizado agora</span>
     </div>
   </div>
 
-  <!-- CONTEÚDO PRINCIPAL -->
-  <main class="flex-1 pt-6 pb-32 px-6 max-w-4xl mx-auto">
+  <main class="flex-1 pt-6 pb-32 px-6 max-w-4xl mx-auto w-full">
 
-    <!-- TÍTULO -->
     <div class="flex items-center gap-3 mb-6">
       <i class="fas fa-bell text-cyan-500 text-2xl"></i>
       <h2 class="text-2xl font-bold text-gray-800">Alertas em Tempo Real</h2>
     </div>
 
-    <!-- LISTA DE ALERTAS (muitos dados reais!) -->
     <div class="space-y-5">
 
-      <!-- 1. Movimento Suspeito (Laranja) -->
       <div class="bg-white rounded-3xl shadow-xl border-l-8 border-orange-500 overflow-hidden">
         <div class="p-6 flex gap-5">
           <div class="mt-1">
-            <div class="w-5 h-5 rounded-full bg-orange-500 shadow-lg"></div>
+            <div class="w-4 h-4 rounded-full bg-orange-500 shadow-lg"></div>
           </div>
           <div class="flex-1">
-            <h3 class="text-xl font-bold text-orange-600">Movimento Suspeito</h3>
-            <p class="text-gray-700 mt-1">Sistema automatizado detectou condição anômala no <strong>Terminal Joana
-                Bezerra</strong></p>
+            <h3 class="text-lg font-bold text-orange-600">Movimento Suspeito</h3>
+            <p class="text-gray-700 mt-1 text-sm">Condição anômala detectada no Terminal.</p>
             <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
-              <i class="fas fa-map-marker-alt"></i> Av. João de Barros • 2 minutos atrás
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. Temperatura Alta (Vermelho) -->
-      <div class="bg-white rounded-3xl shadow-xl border-l-8 border-red-600 overflow-hidden">
-        <div class="p-6 flex gap-5">
-          <div class="mt-1">
-            <div class="w-5 h-5 rounded-full bg-red-600 shadow-lg"></div>
-          </div>
-          <div class="flex-1">
-            <h3 class="text-xl font-bold text-red-600">Temperatura Alta</h3>
-            <p class="text-gray-700 mt-1">Sistema automatizado detectou condição extrema no <strong>Terminal
-                Caxangá</strong></p>
-            <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
-              <i class="fas fa-map-marker-alt"></i> Caxangá, Recife • 5 minutos atrás
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3. Ruído Excessivo (Vermelho) -->
-      <div class="bg-white rounded-3xl shadow-xl border-l-8 border-red-600 overflow-hidden">
-        <div class="p-6 flex gap-5">
-          <div class="mt-1">
-            <div class="w-5 h-5 rounded-full bg-red-600 shadow-lg"></div>
-          </div>
-          <div class="flex-1">
-            <h3 class="text-xl font-bold text-red-600">Ruído Excessivo</h3>
-            <p class="text-gray-700 mt-1">Sistema automatizado detectou condição inquietante na <strong>Av. Boa
-                Viagem</strong></p>
-            <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
-              <i class="fas fa-map-marker-alt"></i> Av. Boa Viagem • 7 minutos atrás
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 4. Movimentação Tranquila (Verde) -->
-      <div class="bg-white rounded-3xl shadow-xl border-l-8 border-green-500 overflow-hidden">
-        <div class="p-6 flex gap-5">
-          <div class="mt-1">
-            <div class="w-5 h-5 rounded-full bg-green-500 shadow-lg"></div>
-          </div>
-          <div class="flex-1">
-            <h3 class="text-xl font-bold text-green-600">Movimentação Tranquila</h3>
-            <p class="text-gray-700 mt-1">Sistema automatizado detectou uma movimentação tranquila de cornes e pedestres
-            </p>
-            <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
-              <i class="fas fa-map-marker-alt"></i> Terminal do Barro • 9 minutos atrás
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5. Temperatura Boa (Verde) -->
-      <div class="bg-white rounded-3xl shadow-xl border-l-8 border-green-500 overflow-hidden">
-        <div class="p-6 flex gap-5">
-          <div class="mt-1">
-            <div class="w-5 h-5 rounded-full bg-green-500 shadow-lg"></div>
-          </div>
-          <div class="flex-1">
-            <h3 class="text-xl font-bold text-green-600">Temperatura Boa</h3>
-            <p class="text-gray-700 mt-1">Sistema automatizado detectou condição boa do ar no local</p>
-            <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
-              <i class="fas fa-map-marker-alt"></i> Av. Mascarenhas de Morais • 4 minutos atrás
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mais alertas (só pra encher a tela como na imagem) -->
-      <div class="bg-white rounded-3xl shadow-xl border-l-8 border-orange-500 overflow-hidden">
-        <div class="p-6 flex gap-5">
-          <div class="mt-1">
-            <div class="w-5 h-5 rounded-full bg-orange-500 shadow-lg"></div>
-          </div>
-          <div class="flex-1">
-            <h3 class="text-xl font-bold text-orange-600">Aglomeração Detectada</h3>
-            <p class="text-gray-700 mt-1">Grande concentração de pessoas no <strong>Terminal Integrado do
-                Recife</strong></p>
-            <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
-              <i class="fas fa-map-marker-alt"></i> Centro • 12 minutos atrás
+              <i class="fas fa-clock"></i> 2 min atrás
             </div>
           </div>
         </div>
@@ -163,13 +76,13 @@
       <div class="bg-white rounded-3xl shadow-xl border-l-8 border-red-600 overflow-hidden">
         <div class="p-6 flex gap-5">
           <div class="mt-1">
-            <div class="w-5 h-5 rounded-full bg-red-600 shadow-lg"></div>
+            <div class="w-4 h-4 rounded-full bg-red-600 shadow-lg"></div>
           </div>
           <div class="flex-1">
-            <h3 class="text-xl font-bold text-red-600">Iluminação Falhou</h3>
-            <p class="text-gray-700 mt-1">Falha no sistema de iluminação no ponto da <strong>Rua do Sol</strong></p>
+            <h3 class="text-lg font-bold text-red-600">Ruído Excessivo</h3>
+            <p class="text-gray-700 mt-1 text-sm">Níveis de decibéis acima do normal.</p>
             <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
-              <i class="fas fa-map-marker-alt"></i> Santo Antônio • 15 minutos atrás
+              <i class="fas fa-clock"></i> 7 min atrás
             </div>
           </div>
         </div>
@@ -178,13 +91,13 @@
       <div class="bg-white rounded-3xl shadow-xl border-l-8 border-green-500 overflow-hidden">
         <div class="p-6 flex gap-5">
           <div class="mt-1">
-            <div class="w-5 h-5 rounded-full bg-green-500 shadow-lg"></div>
+            <div class="w-4 h-4 rounded-full bg-green-500 shadow-lg"></div>
           </div>
           <div class="flex-1">
-            <h3 class="text-xl font-bold text-green-600">Tudo Normal</h3>
-            <p class="text-gray-700 mt-1">Nenhum incidente detectado no ponto da <strong>Av. Caxangá</strong></p>
+            <h3 class="text-lg font-bold text-green-600">Tudo Normal</h3>
+            <p class="text-gray-700 mt-1 text-sm">Operação normalizada na região.</p>
             <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
-              <i class="fas fa-map-marker-alt"></i> Caxangá • 3 minutos atrás
+              <i class="fas fa-clock"></i> 9 min atrás
             </div>
           </div>
         </div>
@@ -193,31 +106,28 @@
     </div>
 
     <p class="text-center text-xs text-gray-500 mt-8">
-      Lista atualizada a cada 2 minutos. Fique atento!
+      Lista atualizada automaticamente.
     </p>
   </main>
 
-  <!-- RODAPÉ FIXO -->
-  <footer class="fixed bottom-0 left-0 right-0 bg-white border-t-4 border-cyan-500 shadow-2xl">
-    <div class="max-w-7xl mx-auto px-8 py-5">
-      <div class="flex justify-around items-center">
-        <a href="screen2.html" class="flex flex-col items-center gap-1 text-gray-500">
-
-          <i class="fas fa-bus text-3xl"></i>
-          <span>proximas</span>
+  <footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-3 shadow-[0_-5px_10px_rgba(0,0,0,0.05)] md:hidden z-50">
+    <div class="flex justify-around items-center text-xs">
+        <a href="/smartbus/screen2.html" class="flex flex-col items-center gap-1 text-gray-400 hover:text-cyan-600">
+            <i class="fas fa-cloud-rain text-xl"></i>
+            <span>Clima</span>
         </a>
-        <a  href="screen3.html" class="flex flex-col items-center gap-1 text-gray-500">
-          <i class="fas fa-clock text-3xl"></i>
-          <span class="text-xs">Em Tempo Real</span>
+        
+        <a href="/smartbus/screen3.html" class="flex flex-col items-center gap-1 text-gray-400 hover:text-cyan-600">
+            <i class="fas fa-chart-line text-xl"></i>
+            <span>Eficiência</span>
         </a>
-        <a href="screen4.html" class="flex flex-col items-center gap-1 text-cyan-600 font-bold">
-          <i class="fas fa-bell text-3xl"></i>
-          <span class="text-xs">Alertas</span>
+        
+        <a href="/smartbus/screen4.html" class="flex flex-col items-center gap-1 text-cyan-600 font-bold">
+            <i class="fas fa-bell text-xl"></i>
+            <span>Alertas</span>
         </a>
-      </div>
     </div>
   </footer>
 
 </body>
-
 </html>
