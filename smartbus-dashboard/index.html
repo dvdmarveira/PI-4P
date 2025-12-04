@@ -22,46 +22,73 @@
 
 <body class="bg-gray-100 font-sans">
 
-  <!-- Header fixo -->
   <header class="bg-[#1A1F38] text-white py-4 shadow-lg fixed top-0 left-0 right-0 z-50">
     <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
       <div class="flex items-center gap-3">
-        <i class="fas fa-bus text-cyan-400 text-2xl"></i>
-        <h1 class="text-xl font-bold text-cyan-400">Smartbus</h1>
-        <span class="text-xs opacity-80">O tempo todo com você</span>
+        <div class="bg-cyan-500 p-2 rounded-lg">
+            <i class="fas fa-bus text-white text-xl"></i>
+        </div>
+        <div>
+            <h1 class="text-xl font-bold text-cyan-400">Smartbus</h1>
+            <span class="text-xs opacity-80 block -mt-1">O tempo todo com você</span>
+        </div>
       </div>
       <div class="flex gap-6">
-        <a href="screen2.html" class="hover:text-cyan-400 transition">Clima</a>
-        <a href="screen3.html" class="hover:text-cyan-400 transition">Eficiência</a>
-        <a href="screen4.html" class="hover:text-cyan-400 transition">Alertas</a>
+        <a href="/smartbus/screen2.html" class="hover:text-cyan-400 transition">Clima</a>
+        <a href="/smartbus/screen3.html" class="hover:text-cyan-400 transition">Eficiência</a>
+        <a href="/smartbus/screen4.html" class="hover:text-cyan-400 transition">Alertas</a>
       </div>
     </div>
   </header>
 
-  <!-- Hero com abas rápidas -->
-  <main class="pt-24 pb-12 px-4 max-w-6xl mx-auto">
+  <main class="pt-28 pb-12 px-4 max-w-6xl mx-auto">
     <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Smartbus - Dashboard Inteligente</h2>
 
     <div class="grid md:grid-cols-3 gap-8">
-      <a href="screen2.html" class="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition transform hover:-translate-y-2">
-        <i class="fas fa-cloud-rain text-5xl text-blue-600 mb-4"></i>
-        <h3 class="text-xl font-bold">Condições Climáticas</h3>
-        <p class="text-gray-600 mt-2">Temperatura, umidade e previsão</p>
+      
+      <a href="/smartbus/screen2.html" class="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition transform hover:-translate-y-2 group">
+        <div class="bg-blue-50 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-100 transition">
+            <i class="fas fa-cloud-rain text-4xl text-blue-600"></i>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800">Condições Climáticas</h3>
+        <p class="text-gray-600 mt-2 text-sm">Temperatura, umidade e previsão do tempo na parada.</p>
       </a>
 
-      <a href="screen3.html" class="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition transform hover:-translate-y-2">
-        <i class="fas fa-chart-line text-5xl text-green-600 mb-4"></i>
-        <h3 class="text-xl font-bold">Eficiência da Parada</h3>
-        <p class="text-gray-600 mt-2">Iluminação, sensores e mapa</p>
+      <a href="/smartbus/screen3.html" class="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition transform hover:-translate-y-2 group">
+        <div class="bg-green-50 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 group-hover:bg-green-100 transition">
+            <i class="fas fa-chart-line text-4xl text-green-600"></i>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800">Eficiência da Parada</h3>
+        <p class="text-gray-600 mt-2 text-sm">Monitoramento de iluminação, sensores e mapa de calor.</p>
       </a>
 
-      <a href="screen4.html" class="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition transform hover:-translate-y-2">
-        <i class="fas fa-bell text-5xl text-red-600 mb-4"></i>
-        <h3 class="text-xl font-bold">Alertas em Tempo Real</h3>
-        <p class="text-gray-600 mt-2">Movimentação suspeita, ruído, temperatura</p>
+      <a href="/smartbus/screen4.html" class="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition transform hover:-translate-y-2 group">
+        <div class="bg-red-50 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4 group-hover:bg-red-100 transition">
+            <i class="fas fa-bell text-4xl text-red-600"></i>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800">Alertas em Tempo Real</h3>
+        <p class="text-gray-600 mt-2 text-sm">Movimentação suspeita, ruído excessivo e temperatura crítica.</p>
       </a>
+
     </div>
   </main>
-</body>
 
+  <footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-3 shadow-lg md:hidden">
+    <div class="flex justify-around items-center text-xs text-gray-500">
+        <a href="/smartbus/screen2.html" class="flex flex-col items-center gap-1 hover:text-cyan-600">
+            <i class="fas fa-cloud-rain text-xl"></i>
+            <span>Clima</span>
+        </a>
+        <a href="/smartbus/screen3.html" class="flex flex-col items-center gap-1 hover:text-cyan-600">
+            <i class="fas fa-chart-line text-xl"></i>
+            <span>Eficiência</span>
+        </a>
+        <a href="/smartbus/screen4.html" class="flex flex-col items-center gap-1 hover:text-cyan-600">
+            <i class="fas fa-bell text-xl"></i>
+            <span>Alertas</span>
+        </a>
+    </div>
+  </footer>
+
+</body>
 </html>
