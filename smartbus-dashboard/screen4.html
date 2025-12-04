@@ -30,7 +30,7 @@
       <div class="hidden md:flex items-center gap-6 text-sm">
         <a href="/smartbus/screen2.html" class="hover:text-cyan-400 transition">Clima</a>
         <a href="/smartbus/screen3.html" class="hover:text-cyan-400 transition">Eficiência</a>
-        <a href="/smartbus/screen4.html" class="text-cyan-400 font-bold">Alertas</a>
+        <a href="/smartbus/screen4.html" class="text-cyan-400 font-bold border-b-2 border-cyan-400 pb-1">Alertas</a>
       </div>
 
       <div class="flex items-center gap-6 text-sm">
@@ -42,8 +42,8 @@
   <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 shadow-lg pt-24">
     <div class="max-w-7xl mx-auto px-6 flex items-center justify-between text-sm">
       <div class="flex items-center gap-4">
-        <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-medium">Terminal 10</span>
-        <span class="font-semibold hidden sm:inline">Av. Boa Viagem</span>
+        <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-medium">Terminal 10 - Centro</span>
+        <span class="font-semibold hidden sm:inline">Parada: Av. Boa Viagem</span>
       </div>
       <span class="text-xs opacity-90">Atualizado agora</span>
     </div>
@@ -61,13 +61,28 @@
       <div class="bg-white rounded-3xl shadow-xl border-l-8 border-orange-500 overflow-hidden">
         <div class="p-6 flex gap-5">
           <div class="mt-1">
-            <div class="w-4 h-4 rounded-full bg-orange-500 shadow-lg"></div>
+            <div class="w-4 h-4 rounded-full bg-orange-500 shadow-lg animate-pulse"></div>
           </div>
           <div class="flex-1">
             <h3 class="text-lg font-bold text-orange-600">Movimento Suspeito</h3>
-            <p class="text-gray-700 mt-1 text-sm">Condição anômala detectada no Terminal.</p>
+            <p class="text-gray-700 mt-1 text-sm">Sistema detectou condição anômala no <strong>Terminal Joana Bezerra</strong>.</p>
             <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
-              <i class="fas fa-clock"></i> 2 min atrás
+              <i class="fas fa-map-marker-alt"></i> Av. João de Barros • 2 min atrás
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-3xl shadow-xl border-l-8 border-red-600 overflow-hidden">
+        <div class="p-6 flex gap-5">
+          <div class="mt-1">
+            <div class="w-4 h-4 rounded-full bg-red-600 shadow-lg animate-pulse"></div>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-lg font-bold text-red-600">Temperatura Alta</h3>
+            <p class="text-gray-700 mt-1 text-sm">Condição extrema detectada no <strong>Terminal Caxangá</strong>.</p>
+            <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
+              <i class="fas fa-map-marker-alt"></i> Caxangá, Recife • 5 min atrás
             </div>
           </div>
         </div>
@@ -80,9 +95,69 @@
           </div>
           <div class="flex-1">
             <h3 class="text-lg font-bold text-red-600">Ruído Excessivo</h3>
-            <p class="text-gray-700 mt-1 text-sm">Níveis de decibéis acima do normal.</p>
+            <p class="text-gray-700 mt-1 text-sm">Condição inquietante na <strong>Av. Boa Viagem</strong>.</p>
             <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
-              <i class="fas fa-clock"></i> 7 min atrás
+              <i class="fas fa-map-marker-alt"></i> Boa Viagem • 7 min atrás
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-3xl shadow-xl border-l-8 border-green-500 overflow-hidden">
+        <div class="p-6 flex gap-5">
+          <div class="mt-1">
+            <div class="w-4 h-4 rounded-full bg-green-500 shadow-lg"></div>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-lg font-bold text-green-600">Movimentação Tranquila</h3>
+            <p class="text-gray-700 mt-1 text-sm">Fluxo normal de pedestres.</p>
+            <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
+              <i class="fas fa-map-marker-alt"></i> Terminal do Barro • 9 min atrás
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-3xl shadow-xl border-l-8 border-green-500 overflow-hidden">
+        <div class="p-6 flex gap-5">
+          <div class="mt-1">
+            <div class="w-4 h-4 rounded-full bg-green-500 shadow-lg"></div>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-lg font-bold text-green-600">Temperatura Boa</h3>
+            <p class="text-gray-700 mt-1 text-sm">Condição climática ideal no local.</p>
+            <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
+              <i class="fas fa-map-marker-alt"></i> Av. Mascarenhas de Morais • 4 min atrás
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-3xl shadow-xl border-l-8 border-orange-500 overflow-hidden">
+        <div class="p-6 flex gap-5">
+          <div class="mt-1">
+            <div class="w-4 h-4 rounded-full bg-orange-500 shadow-lg"></div>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-lg font-bold text-orange-600">Aglomeração Detectada</h3>
+            <p class="text-gray-700 mt-1 text-sm">Grande concentração de pessoas no <strong>T.I. Recife</strong>.</p>
+            <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
+              <i class="fas fa-map-marker-alt"></i> Centro • 12 min atrás
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-3xl shadow-xl border-l-8 border-red-600 overflow-hidden">
+        <div class="p-6 flex gap-5">
+          <div class="mt-1">
+            <div class="w-4 h-4 rounded-full bg-red-600 shadow-lg"></div>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-lg font-bold text-red-600">Iluminação Falhou</h3>
+            <p class="text-gray-700 mt-1 text-sm">Falha no sistema de iluminação pública.</p>
+            <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
+              <i class="fas fa-map-marker-alt"></i> Rua do Sol • 15 min atrás
             </div>
           </div>
         </div>
@@ -95,9 +170,9 @@
           </div>
           <div class="flex-1">
             <h3 class="text-lg font-bold text-green-600">Tudo Normal</h3>
-            <p class="text-gray-700 mt-1 text-sm">Operação normalizada na região.</p>
+            <p class="text-gray-700 mt-1 text-sm">Nenhum incidente detectado.</p>
             <div class="flex items-center gap-2 mt-3 text-xs text-gray-500">
-              <i class="fas fa-clock"></i> 9 min atrás
+              <i class="fas fa-map-marker-alt"></i> Caxangá • 3 min atrás
             </div>
           </div>
         </div>
@@ -106,7 +181,7 @@
     </div>
 
     <p class="text-center text-xs text-gray-500 mt-8">
-      Lista atualizada automaticamente.
+      Lista atualizada a cada 2 minutos. Fique atento!
     </p>
   </main>
 
